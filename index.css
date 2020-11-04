@@ -1,0 +1,49 @@
+.drop-zone {
+  max-width: 200px;
+  height: 200px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  color: #eae2b7;
+  border: 4px dashed #d62828;
+  border-radius: 10px;
+}
+
+.drop-zone--over {
+  border-style: solid;
+}
+.drop-zone__input {
+  display: none;
+}
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #eae2b7;
+  position: relative;
+  background-size: cover;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 4px 0;
+  color: #ffffff;
+  background: rgba(0, 48, 73, 0.75);
+  font-size: 14px;
+  text-align: center;
+}
+
+body {
+  background-color: #003049;
+}
