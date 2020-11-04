@@ -1,7 +1,5 @@
 # proiect_multimedia
 
-# proiect_multimedia
-
 ## Cerinte
 
 Descriere: Permite utilizatorului să încarce și să editeze fotografii (imagini raster în format JPEG, PNG, ...).
