@@ -38,10 +38,19 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
       var ctx = document.getElementById("canvas").getContext("2d");
       var img = new Image();
       img.onload = function () {
-        ctx.drawImage(img, 0, 0, can.clientWidth, can.clientHeight);
+        ctx.drawImage(img, 0, 0, can.width, can.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        for (var i = 0; i < data.length; i += 4) {
+          var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+          data[i] = avg; // red
+          data[i + 1] = avg; // green
+          data[i + 2] = avg; // blue
+          ctx.putImageData(imageData, 0, 0);
+        }
       };
       img.src = URL.createObjectURL(e.dataTransfer.files[0]);
-      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+      changeMode();
     }
 
     dropZoneElement.classList.remove("drop-zone--over");
