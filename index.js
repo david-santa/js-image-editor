@@ -5,6 +5,12 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
     inputElement.click();
   });
 
+  const buttonDelete = document.querySelector(".btn");
+
+  buttonDelete.addEventListener("click", (e) => {
+    changeMode();
+  });
+
   inputElement.addEventListener("change", (e) => {
     if (inputElement.files.length) {
       updateThumbnail(dropZoneElement, inputElement.files[0]);
@@ -27,6 +33,19 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 
     if (e.dataTransfer.files.length) {
       inputElement.files = e.dataTransfer.files;
+      const srcImg = files[0];
+      var ctx = document.getElementById("canvas").getContext("2d");
+      var img = new Image();
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+        ctx.beginPath();
+        ctx.moveTo(30, 96);
+        ctx.lineTo(70, 66);
+        ctx.lineTo(103, 76);
+        ctx.lineTo(170, 15);
+        ctx.stroke();
+      };
+      img.src = srcImg;
       updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
     }
 
@@ -59,4 +78,24 @@ function updateThumbnail(dropZoneElement, file) {
   } else {
     thumbnailElement.style.backgroundImage = null;
   }
+}
+
+function changeMode() {
+  let formElement = document.querySelector(".form-drop");
+  formElement.remove();
+}
+
+function draw() {
+  var ctx = document.getElementById("canvas").getContext("2d");
+  var img = new Image();
+  img.onload = function () {
+    ctx.drawImage(img, 0, 0);
+    ctx.beginPath();
+    ctx.moveTo(30, 96);
+    ctx.lineTo(70, 66);
+    ctx.lineTo(103, 76);
+    ctx.lineTo(170, 15);
+    ctx.stroke();
+  };
+  img.src = "";
 }
