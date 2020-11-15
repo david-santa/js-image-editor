@@ -45,8 +45,8 @@
 }
 
 .canvas {
-  width: 80%;
-  max-height: 50%;
+  width: 500;
+  height: 500;
 }
 
 body {
