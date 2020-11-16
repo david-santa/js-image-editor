@@ -96,7 +96,11 @@ function albNegru(imageData) {
     data[i] = avg; // red
     data[i + 1] = avg; // green
     data[i + 2] = avg; // blue
-    ctx.putImageData(imageData, 0, 0);
+    ctx.putImageData(
+      imageData,
+      xStart < xEnd ? xStart : xEnd,
+      yStart < yEnd ? yStart : yEnd
+    );
   }
 }
 
@@ -124,6 +128,19 @@ canvas.addEventListener("mouseup", (e) => {
 });
 
 document.addEventListener("keydown", logKey);
+
+const buttonBW = document.querySelector(".btnBW");
+buttonBW.addEventListener("click", (e) => {
+  var canvas = document.getElementById("canvas");
+  var ctx = document.getElementById("canvas").getContext("2d");
+  const imageData = ctx.getImageData(
+    xStart,
+    yStart,
+    xEnd - xStart,
+    yEnd - yStart
+  );
+  albNegru(imageData);
+});
 
 function logKey(e) {
   if (e.code === `KeyA`) {
