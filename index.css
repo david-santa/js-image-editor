@@ -46,11 +46,11 @@
 }
 
 .canvas {
-  position: absolute; left:0; top:0; z-index: 0;
+  position: absolute;z-index: 0;
 }
 
 .canvasOver{
-  position: absolute; left:0; top:0; z-index: 1;
+  position: absolute; z-index: 1;
 }
 
 body {

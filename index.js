@@ -4,6 +4,8 @@ const canvas = document.getElementById("canvas");
 const ctx = document.getElementById("canvas").getContext("2d");
 const canvasOver = document.getElementById("canvasOver");
 const ctxOver = document.getElementById("canvasOver").getContext("2d");
+var originalRatio=16/9;
+var img = new Image();
 var xStart = 0;
 var yStart = 0;
 var xEnd = 0;
@@ -19,6 +21,7 @@ canvasOver.addEventListener("mousedown", (e) => {
   xStart = canvasX;
   yStart = canvasY;
   console.log(xStart, yStart);
+  ctxOver.clearRect(0,0,canvas.width,canvas.height)
 });
 
 canvasOver.addEventListener("mouseup", (e) => {
@@ -26,21 +29,18 @@ canvasOver.addEventListener("mouseup", (e) => {
   var canvasY = Math.round(e.clientY - canvas.offsetTop);
   xEnd = canvasX;
   yEnd = canvasY;
+  ctxOver.fillstyle = "#000000"
+  ctxOver.strokeRect(xStart, yStart, xEnd - xStart, yEnd - yStart);
 });
 
 
-document.addEventListener("keydown", logKey);
+document.addEventListener("keydown", logKeyDown);
 
-function logKey(e) {
-  if (e.code === `KeyA`) {
-    ctxOver.fillstyle = "#000000"
-    canvasOver
-      .getContext("2d")
-      .fillRect(xStart, yStart, xEnd - xStart, yEnd - yStart);
-  }
-  if(e.code === `KeyB`){
-    //ctxOver.fillStyle = "#00000000";
-    ctxOver.clearRect(0,0,canvas.width,canvas.height);
+function logKeyDown(e) {
+  if(e.code === `KeyA`){
+    canvas.width=300;
+    canvas.height=300/originalRatio;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }
 }
 
@@ -65,11 +65,17 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
   inputElement.addEventListener("change", (e) => {
     if (inputElement.files.length) {
       var file = inputElement.files;
-      var img = new Image();
+      img = new Image();
       img.onload = function () {
-        ctx.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvasOver.width = img.width;
+        canvasOver.height = img.height;
+        originalRatio = img.width/img.height;
+        ctx.drawImage(img, 0, 0, img.width, img.height);
       };
       img.src = URL.createObjectURL(inputElement.files[0]);
+      console.log(img.src)
       updateThumbnail(dropZoneElement, inputElement.files[0]);
       changeMode();
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -90,14 +96,14 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
   dropZoneElement.addEventListener("drop", (e) => {
     e.preventDefault();
     if (e.dataTransfer.files.length) {
+      changeMode();
       inputElement = inputElement.files = e.dataTransfer.files;
-      var img = new Image();
+      img = new Image();
       img.onload = function () {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       };
       img.src = URL.createObjectURL(e.dataTransfer.files[0]);
-      changeMode();
     }
 
     dropZoneElement.classList.remove("drop-zone--over");
@@ -140,6 +146,7 @@ function changeMode() {
   let formElement = document.querySelector(".form-drop");
   formElement.remove();
 }
+
 
 //#endregion
 
