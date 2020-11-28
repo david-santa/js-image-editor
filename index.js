@@ -2,6 +2,8 @@
 const buttonBW = document.querySelector(".btnBW");
 const canvas = document.getElementById("canvas");
 const ctx = document.getElementById("canvas").getContext("2d");
+const canvasOver = document.getElementById("canvasOver");
+const ctxOver = document.getElementById("canvasOver").getContext("2d");
 var xStart = 0;
 var yStart = 0;
 var xEnd = 0;
@@ -10,7 +12,7 @@ var yEnd = 0;
 
 //#region EVENT LISTENERS
 
-canvas.addEventListener("mousedown", (e) => {
+canvasOver.addEventListener("mousedown", (e) => {
   var cRect = canvas.getBoundingClientRect();
   var canvasX = Math.round(e.clientX - canvas.offsetLeft);
   var canvasY = Math.round(e.clientY - canvas.offsetTop);
@@ -19,22 +21,26 @@ canvas.addEventListener("mousedown", (e) => {
   console.log(xStart, yStart);
 });
 
-canvas.addEventListener("mouseup", (e) => {
+canvasOver.addEventListener("mouseup", (e) => {
   var canvasX = Math.round(e.clientX - canvas.offsetLeft);
   var canvasY = Math.round(e.clientY - canvas.offsetTop);
   xEnd = canvasX;
   yEnd = canvasY;
 });
 
+
 document.addEventListener("keydown", logKey);
 
 function logKey(e) {
   if (e.code === `KeyA`) {
-    canvas
+    ctxOver.fillstyle = "#000000"
+    canvasOver
       .getContext("2d")
       .fillRect(xStart, yStart, xEnd - xStart, yEnd - yStart);
-    console.log(xEnd, yEnd);
-    console.log(xStart, yStart, xEnd - xStart, yEnd - yStart);
+  }
+  if(e.code === `KeyB`){
+    //ctxOver.fillStyle = "#00000000";
+    ctxOver.clearRect(0,0,canvas.width,canvas.height);
   }
 }
 
@@ -42,8 +48,8 @@ canvas.addEventListener("mousemove", function (e) {
   var cRect = canvas.getBoundingClientRect();
   var canvasX = Math.round(e.clientX - cRect.left);
   var canvasY = Math.round(e.clientY - cRect.top);
-  canvas.getContext("2d").clearRect(0, 0, 100, 30);
-  canvas.getContext("2d").fillText("X: " + canvasX + ", Y: " + canvasY, 10, 20);
+  canvasOver.getContext("2d").clearRect(0, 0, 100, 30);
+  canvasOver.getContext("2d").fillText("X: " + canvasX + ", Y: " + canvasY, 10, 20);
 });
 //#endregion
 
@@ -58,13 +64,15 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 
   inputElement.addEventListener("change", (e) => {
     if (inputElement.files.length) {
-      inputElement.files = e.dataTransfer.files;
+      var file = inputElement.files;
       var img = new Image();
       img.onload = function () {
-        ctx.drawImage(img, 0, 0, can.clientWidth, can.clientHeight);
+        ctx.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
       };
-      img.src = URL.createObjectURL(e.dataTransfer.files[0]);
+      img.src = URL.createObjectURL(inputElement.files[0]);
       updateThumbnail(dropZoneElement, inputElement.files[0]);
+      changeMode();
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
   });
 
