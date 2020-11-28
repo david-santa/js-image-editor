@@ -13,6 +13,7 @@
   color: #eae2b7;
   border: 4px dashed #d62828;
   border-radius: 10px;
+  position:relative; z-index:2;
 }
 
 .drop-zone--over {
@@ -45,8 +46,11 @@
 }
 
 .canvas {
-  width: 500;
-  height: 500;
+  position: absolute; left:0; top:0; z-index: 0;
+}
+
+.canvasOver{
+  position: absolute; left:0; top:0; z-index: 1;
 }
 
 body {
