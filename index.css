@@ -1,3 +1,20 @@
+.grid-container{
+  display:grid;
+  grid-template-areas:
+          'header header header header header header'
+    'main main main main main menu';
+}
+
+.header{
+  grid-area: header;
+  background-color: #eae2b7;
+}
+
+.menu{
+  grid-area: menu;
+  background-color: #fcbf49;
+}
+
 .drop-zone {
   max-width: 200px;
   height: 200px;
