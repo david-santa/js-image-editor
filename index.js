@@ -1,5 +1,4 @@
 //#region DECLARATION ZONE
-const buttonBW = document.querySelector(".btnBW");
 const canvas = document.getElementById("canvas");
 const ctx = document.getElementById("canvas").getContext("2d");
 const canvasOver = document.getElementById("canvasOver");
@@ -66,13 +65,12 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
   canvasContainer.style.display = "none";
   const dropZoneElement = inputElement.closest(".drop-zone");
 
-  dropZoneElement.addEventListener("click", (e) => {
+  dropZoneElement.addEventListener("click", () => {
     inputElement.click();
   });
 
-  inputElement.addEventListener("change", (e) => {
+  inputElement.addEventListener("change", () => {
     if (inputElement.files.length) {
-      var file = inputElement.files;
       img = new Image();
       img.onload = function () {
         canvas.width = 800;
@@ -96,7 +94,7 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
   });
 
   ["dragleave", "dragend"].forEach((type) => {
-    dropZoneElement.addEventListener(type, (e) => {
+    dropZoneElement.addEventListener(type, () => {
       dropZoneElement.classList.remove("drop-zone--over");
     });
   });
@@ -109,7 +107,6 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
       img = new Image();
       img.onload = function () {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       };
       img.src = URL.createObjectURL(e.dataTransfer.files[0]);
     }
@@ -162,20 +159,20 @@ function changeMode() {
 
 //#region IMAGE EFFECTS
 
-function albNegru(imageData) {
-  const data = imageData.data;
-  for (var i = 0; i < data.length; i += 4) {
-    var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-    data[i] = avg; // red
-    data[i + 1] = avg; // green
-    data[i + 2] = avg; // blue
-    ctx.putImageData(
-      imageData,
-      xStart < xEnd ? xStart : xEnd,
-      yStart < yEnd ? yStart : yEnd
-    );
-  }
-}
+// function albNegru(imageData) {
+//   const data = imageData.data;
+//   for (var i = 0; i < data.length; i += 4) {
+//     var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+//     data[i] = avg; // red
+//     data[i + 1] = avg; // green
+//     data[i + 2] = avg; // blue
+//     ctx.putImageData(
+//       imageData,
+//       xStart < xEnd ? xStart : xEnd,
+//       yStart < yEnd ? yStart : yEnd
+//     );
+//   }
+// }
 
 //#endregion
 
