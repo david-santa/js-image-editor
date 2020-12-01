@@ -4,6 +4,9 @@ const canvas = document.getElementById("canvas");
 const ctx = document.getElementById("canvas").getContext("2d");
 const canvasOver = document.getElementById("canvasOver");
 const ctxOver = document.getElementById("canvasOver").getContext("2d");
+const canvasContainer = document.getElementById("canvas-container");
+const canvasOffsetX = 20;
+const canvasOffsetY = 100;
 var originalRatio=16/9;
 var img = new Image();
 var xStart = 0;
@@ -15,20 +18,15 @@ var yEnd = 0;
 //#region EVENT LISTENERS
 
 canvasOver.addEventListener("mousedown", (e) => {
-  var cRect = canvas.getBoundingClientRect();
-  var canvasX = Math.round(e.clientX - canvas.offsetLeft);
-  var canvasY = Math.round(e.clientY - canvas.offsetTop);
-  xStart = canvasX;
-  yStart = canvasY;
+  xStart = Math.round(e.clientX - canvasOffsetX);
+  yStart = Math.round(e.clientY - canvasOffsetY);
   console.log(xStart, yStart);
   ctxOver.clearRect(0,0,canvas.width,canvas.height)
 });
 
 canvasOver.addEventListener("mouseup", (e) => {
-  var canvasX = Math.round(e.clientX - canvas.offsetLeft);
-  var canvasY = Math.round(e.clientY - canvas.offsetTop);
-  xEnd = canvasX;
-  yEnd = canvasY;
+  xEnd = Math.round(e.clientX - canvasOffsetX);
+  yEnd = Math.round(e.clientY - canvasOffsetY);
   ctxOver.fillstyle = "#000000"
   ctxOver.strokeRect(xStart, yStart, xEnd - xStart, yEnd - yStart);
 });
@@ -38,9 +36,9 @@ document.addEventListener("keydown", logKeyDown);
 
 function logKeyDown(e) {
   if(e.code === `KeyA`){
-    canvas.width=300;
-    canvas.height=300/originalRatio;
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    // canvas.width=300;
+    // canvas.height=300/originalRatio;
+    // ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }
 }
 
@@ -56,6 +54,7 @@ canvas.addEventListener("mousemove", function (e) {
 //#region QUERY SELECTOR ALL
 
 document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  canvasContainer.style.display = "none";
   const dropZoneElement = inputElement.closest(".drop-zone");
 
   dropZoneElement.addEventListener("click", (e) => {
@@ -67,12 +66,12 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
       var file = inputElement.files;
       img = new Image();
       img.onload = function () {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        canvasOver.width = img.width;
-        canvasOver.height = img.height;
+        canvas.width = 800;
+        canvas.height = 600;
+        canvasOver.width = 800;
+        canvasOver.height = 600;
         originalRatio = img.width/img.height;
-        ctx.drawImage(img, 0, 0, img.width, img.height);
+        ctx.drawImage(img, 0, 0, 800, 600);
       };
       img.src = URL.createObjectURL(inputElement.files[0]);
       console.log(img.src)
@@ -145,6 +144,8 @@ function updateThumbnail(dropZoneElement, file) {
 function changeMode() {
   let formElement = document.querySelector(".form-drop");
   formElement.remove();
+  canvasContainer.style.display = "block";
+  canvasContainer.width = 800;
 }
 
 

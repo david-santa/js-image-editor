@@ -6,18 +6,81 @@
 }
 
 .header{
-  grid-area: header;
-  background-color: #eae2b7;
+    grid-area: header;
+    background-color: #eae2b7;
+    text-align: center;
 }
 
 .menu{
-  grid-area: menu;
-  background-color: #fcbf49;
+    grid-area: menu;
+    background-color: #fcbf49;
+}
+
+.main{
+    width:800px;
+    height:600px;
+}
+
+.canvas-container {
+  --border-width: 3px;
+margin:15px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Lato, sans-serif;
+  font-size: 2.5rem;
+  width:800px;
+  height:600px;
+  text-transform: uppercase;
+  color: white;
+  background: #222;
+  border-radius: var(--border-width);
+}
+
+.canvas-container::after {
+   position: absolute;
+   content: "";
+   top: calc(-1 * var(--border-width));
+   left: calc(-1 * var(--border-width));
+   z-index: -1;
+   width: calc(100% + var(--border-width) * 2);
+   height: calc(100% + var(--border-width) * 2);
+   background: linear-gradient(
+           60deg,
+           hsl(224, 85%, 66%),
+           hsl(269, 85%, 66%),
+           hsl(314, 85%, 66%),
+           hsl(359, 85%, 66%),
+           hsl(44, 85%, 66%),
+           hsl(89, 85%, 66%),
+           hsl(134, 85%, 66%),
+           hsl(179, 85%, 66%)
+   );
+   background-size: 300% 300%;
+   background-position: 0 50%;
+   border-radius: calc(2 * var(--border-width));
+   animation: moveGradient 4s alternate infinite;
+ }
+
+
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.form-drop{
+    max-width: 800px;
+    max-height: 600px;
 }
 
 .drop-zone {
-  max-width: 200px;
-  height: 200px;
+    margin-top:50px;
+    margin-left:150px;
+  max-width: 400px;
+  max-height: 600px;
+    height:400px;
   padding: 25px;
   display: flex;
   align-items: center;

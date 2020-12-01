@@ -17,22 +17,21 @@
     <title>Image Editor</title>
   </head>
   <body>
-  <div class="grid-container">
+  <div class="grid-container" id="grid-container">
   <div class="menu"><button>buton1</button> <button>buton2</button></div>
-  <div class="header"> <h1>Aplicatia mea!</h1></div>
+  <div class="header"> <h1>Multimedia Project - Image Editor</h1></div>
   <div class="main">
-    <form action="" class="form-drop">
+    <form class="form-drop">
       <div class="drop-zone">
-        <span class="drop-zone__prompt">Drop file here</span>
+        <span class="drop-zone__prompt">Drop file here or click to upload</span>
         <input type="file" name="addFile" class="drop-zone__input" />
       </div>
     </form>
 
-    <button id="btnBW" class="btnBW">B/W</button>
-    <button id="xd">button</button>
-
-    <canvas id="canvas" class="canvas"></canvas>
-    <canvas id="canvasOver" class = "canvasOver"></canvas>
+    <div class="canvas-container" id="canvas-container">
+      <canvas id="canvas" class="canvas"></canvas>
+      <canvas id="canvasOver" class = "canvasOver"></canvas>
+    </div>
 
   </div>
   </div>
