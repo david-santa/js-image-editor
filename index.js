@@ -7,6 +7,9 @@ const ctxOver = document.getElementById("canvasOver").getContext("2d");
 const canvasContainer = document.getElementById("canvas-container");
 const canvasOffsetX = 20;
 const canvasOffsetY = 100;
+const histogramCanvas = document.getElementById("histogramCanvas")
+const histogramCtx = histogramCanvas.getContext('2d');
+const btnShowHistogram = document.getElementById("btnShowHistogram")
 var originalRatio=16/9;
 var img = new Image();
 var xStart = 0;
@@ -16,6 +19,12 @@ var yEnd = 0;
 //#endregion
 
 //#region EVENT LISTENERS
+
+btnShowHistogram.addEventListener("click",()=>{
+  drawHistogram();
+})
+
+
 
 canvasOver.addEventListener("mousedown", (e) => {
   xStart = Math.round(e.clientX - canvasOffsetX);
@@ -166,6 +175,42 @@ function albNegru(imageData) {
       yStart < yEnd ? yStart : yEnd
     );
   }
+}
+
+//#endregion
+
+//#region HISTOGRAMA
+function array256(default_value) {
+  arr = [];
+  for (var i=0; i<256; i++) { arr[i] = default_value; }
+  return arr;
+}
+function drawHistogram() {
+  var reds = array256(0);
+  var greens = array256(0);
+  var blues = array256(0);
+
+  let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+  console.log(imageData);
+
+  for (var i = 0; i < imageData.width * imageData.height; i += 4) {
+    reds[imageData.data[i]]++;
+    greens[imageData.data[i + 1]]++;
+    blues[imageData.data[i + 2]]++;
+  }
+  for(let i=0;i<255;i++) {
+    histogramCtx.strokeStyle = "#FF0000"
+    histogramCtx.fillStyle = "#FF0000"
+    histogramCtx.fillRect(i, 30, 1, reds[i] / 25);
+    histogramCtx.strokeStyle = "#00FF00"
+    histogramCtx.fillStyle = "#00FF00"
+    histogramCtx.fillRect(i, 30, 1, greens[i] / 25);
+    histogramCtx.strokeStyle = "#0000FF"
+    histogramCtx.fillStyle = "#0000FF"
+    histogramCtx.fillRect(i, 30, 1, blues[i] / 25);
+  }
+  console.log(reds);
 }
 
 //#endregion

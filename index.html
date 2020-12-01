@@ -18,7 +18,10 @@
   </head>
   <body>
   <div class="grid-container" id="grid-container">
-  <div class="menu"><button>buton1</button> <button>buton2</button></div>
+  <div class="menu">
+    <button id="btnShowHistogram">Show Histogram</button>
+    <button>buton2</button>
+  </div>
   <div class="header"> <h1>Multimedia Project - Image Editor</h1></div>
   <div class="main">
     <form class="form-drop">
@@ -34,6 +37,9 @@
     </div>
 
   </div>
+    <div class="histogram">
+      <canvas class="histogramCanvas" id = "histogramCanvas" width = 255 height=100></canvas>
+    </div>
   </div>
     <script src="index.js"></script>
   </body>
