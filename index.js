@@ -9,6 +9,7 @@ const canvasOffsetY = 100;
 const histogramCanvas = document.getElementById("histogramCanvas")
 const histogramCtx = histogramCanvas.getContext('2d');
 const btnShowHistogram = document.getElementById("btnShowHistogram")
+const btnGrayscale = document.getElementById("btnGrayscale");
 var originalRatio=16/9;
 var img = new Image();
 var xStart = 0;
@@ -21,6 +22,10 @@ var yEnd = 0;
 
 btnShowHistogram.addEventListener("click",()=>{
   drawHistogram();
+})
+btnGrayscale.addEventListener("click",()=>{
+  var imageData = ctx.getImageData(xStart,yStart,xEnd-xStart,yEnd-yStart);
+  grayscale(imageData);
 })
 
 
@@ -159,20 +164,21 @@ function changeMode() {
 
 //#region IMAGE EFFECTS
 
-// function albNegru(imageData) {
-//   const data = imageData.data;
-//   for (var i = 0; i < data.length; i += 4) {
-//     var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-//     data[i] = avg; // red
-//     data[i + 1] = avg; // green
-//     data[i + 2] = avg; // blue
-//     ctx.putImageData(
-//       imageData,
-//       xStart < xEnd ? xStart : xEnd,
-//       yStart < yEnd ? yStart : yEnd
-//     );
-//   }
-// }
+function grayscale(imageData) {
+  var data = imageData.data;
+  for (var i = 0; i < data.length; i += 4) {
+    var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+    data[i] = avg; // red
+    data[i + 1] = avg; // green
+    data[i + 2] = avg; // blue
+  }
+  imageData.data = data;
+  ctx.putImageData(
+      imageData,
+      xStart < xEnd ? xStart : xEnd,
+      yStart < yEnd ? yStart : yEnd
+  );
+}
 
 //#endregion
 
