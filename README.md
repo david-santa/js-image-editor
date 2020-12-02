@@ -15,16 +15,15 @@ selecție din Microsoft Paint)
 
 0.5p - ștergere selecție -> pixelii din selecție vor deveni albi
 
-###IN PROGRESS
+1p - afișare continuu (și în timpul modificării selecției) histogramă de culoare pentru selecția curentă
 
+###IN PROGRESS
 
 1p - crop interactiv (utilizatorul trebuie să poată selecta zona din imagine cu ajutorul mouseului)
 
 1p - scalare imagine cu păstrarea proporțiilor (utilizatorul va furniza noua lățime sau noua lungime)
 
 1p - adăugare text (utilizatorul furnizează textul, dimensiunea, culoarea, poziția)
-
-1p - afișare continuu (și în timpul modificării selecției) histogramă de culoare pentru selecția curentă
 
 1.5p - mutare selecție (folosind mouse-ul și tasta Shift)
 
