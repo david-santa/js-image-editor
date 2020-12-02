@@ -13,13 +13,13 @@ const btnGrayscale = document.getElementById("btnGrayscale");
 const btnInvert = document.getElementById("btnInvert");
 const sliderBrightness = document.getElementById("brightnessSlider");
 const sliderContrast = document.getElementById("contrastSlider");
-var originalImage;
-var originalRatio=16/9;
-var img = new Image();
-var xStart = 0;
-var yStart = 0;
-var xEnd = 0;
-var yEnd = 0;
+let originalImage;
+let originalRatio = 16 / 9;
+let img = new Image();
+let xStart = 0;
+let yStart = 0;
+let xEnd = 0;
+let yEnd = 0;
 //#endregion
 
 //#region EVENT LISTENERS
@@ -29,18 +29,18 @@ sliderBrightness.onchange = function() {
 }
 
 sliderContrast.onchange = function() {
-  applyContrast(parseInt(contrastSlider.value, 10));
+  applyContrast(parseInt(sliderContrast.value, 10));
 }
 
 btnShowHistogram.addEventListener("click",()=>{
   drawHistogram();
 })
 btnGrayscale.addEventListener("click",()=>{
-  var imageData = ctx.getImageData(xStart,yStart,xEnd-xStart,yEnd-yStart);
+  const imageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
   grayscale(imageData);
 })
 btnInvert.addEventListener("click",()=>{
-  var imageData = ctx.getImageData(xStart,yStart,xEnd-xStart,yEnd-yStart);
+  const imageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
   invert(imageData);
 })
 
@@ -72,9 +72,9 @@ function logKeyDown(e) {
 }
 
 canvas.addEventListener("mousemove", function (e) {
-  var cRect = canvas.getBoundingClientRect();
-  var canvasX = Math.round(e.clientX - cRect.left);
-  var canvasY = Math.round(e.clientY - cRect.top);
+  const cRect = canvas.getBoundingClientRect();
+  const canvasX = Math.round(e.clientX - cRect.left);
+  const canvasY = Math.round(e.clientY - cRect.top);
   canvasOver.getContext("2d").clearRect(0, 0, 100, 30);
   canvasOver.getContext("2d").fillText("X: " + canvasX + ", Y: " + canvasY, 10, 20);
 });
@@ -196,9 +196,9 @@ function redrawImage() {
 //#region IMAGE EFFECTS
 
 function grayscale(imageData) {
-  var data = imageData.data;
-  for (var i = 0; i < data.length; i += 4) {
-    var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
     data[i] = avg; // red
     data[i + 1] = avg; // green
     data[i + 2] = avg; // blue
@@ -212,8 +212,8 @@ function grayscale(imageData) {
 }
 
 function invert(imageData){
-  var data = imageData.data;
-  for (var i = 0; i < data.length; i += 4) {
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
     data[i]     = 255 - data[i];     // red
     data[i + 1] = 255 - data[i + 1]; // green
     data[i + 2] = 255 - data[i + 2]; // blue
@@ -227,9 +227,9 @@ function invert(imageData){
 
 function applyBrightness(brightness) {
   redrawImage();
-  var imageData = ctx.getImageData(0,0,canvas.width,canvas.height)
-  var data = imageData.data;
-  for (var i = 0; i < data.length; i+= 4) {
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i+= 4) {
     data[i] += 255 * (brightness / 100);
     data[i+1] += 255 * (brightness / 100);
     data[i+2] += 255 * (brightness / 100);
@@ -239,11 +239,11 @@ function applyBrightness(brightness) {
 }
 function applyContrast(contrast) {
   redrawImage();
-  var imageData = ctx.getImageData(0,0,canvas.width,canvas.height)
-  var data = imageData.data;
-  var factor = (259.0 * (contrast + 255.0)) / (255.0 * (259.0 - contrast));
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+  const factor = (259.0 * (contrast + 255.0)) / (255.0 * (259.0 - contrast));
 
-  for (var i = 0; i < data.length; i += 4) {
+  for (let i = 0; i < data.length; i += 4) {
     data[i] = truncateColor(factor * (data[i] - 128.0) + 128.0);
     data[i + 1] = truncateColor(factor * (data[i + 1] - 128.0) + 128.0);
     data[i + 2] = truncateColor(factor * (data[i + 2] - 128.0) + 128.0);
@@ -256,20 +256,20 @@ function applyContrast(contrast) {
 
 //#region HISTOGRAMA
 function array256(default_value) {
-  arr = [];
-  for (var i=0; i<256; i++) { arr[i] = default_value; }
+  let arr = [];
+  for (let i=0; i<256; i++) { arr[i] = default_value; }
   return arr;
 }
 function drawHistogram() {
-  var reds = array256(0);
-  var greens = array256(0);
-  var blues = array256(0);
+  const reds = array256(0);
+  const greens = array256(0);
+  const blues = array256(0);
 
   let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
   console.log(imageData);
 
-  for (var i = 0; i < imageData.width * imageData.height; i += 4) {
+  for (let i = 0; i < imageData.width * imageData.height; i += 4) {
     reds[imageData.data[i]]++;
     greens[imageData.data[i + 1]]++;
     blues[imageData.data[i + 2]]++;
