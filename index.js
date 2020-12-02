@@ -13,6 +13,7 @@ const btnGrayscale = document.getElementById("btnGrayscale");
 const btnInvert = document.getElementById("btnInvert");
 const sliderBrightness = document.getElementById("brightnessSlider");
 const sliderContrast = document.getElementById("contrastSlider");
+var selecting = false;
 var movingSelection = false;
 var timer;
 var shiftDown = false;
@@ -54,6 +55,7 @@ canvasOver.addEventListener("mousedown", (e) => {
     movingSelection = true;
   }
   else {
+    selecting = true;
     xStart = Math.round(e.clientX - canvasOffsetX);
     yStart = Math.round(e.clientY - canvasOffsetY);
     ctxOver.clearRect(0, 0, canvas.width, canvas.height)
@@ -71,6 +73,7 @@ canvasOver.addEventListener("mouseup", (e) => {
     movingSelection = false;
   }
   else{
+    selecting = false;
     xEnd = Math.round(e.clientX - canvasOffsetX);
     yEnd = Math.round(e.clientY - canvasOffsetY);
   ctxOver.fillstyle = "#000000"
@@ -107,6 +110,10 @@ canvasOver.addEventListener("mousemove", function (e) {
   if(movingSelection){
     ctxOver.clearRect(0,0,canvasOver.width,canvasOver.height);
     drawSelectionBox(e.clientX-canvasOffsetX,e.clientY-canvasOffsetY);
+  }
+  if(selecting){
+    ctxOver.clearRect(0,0,canvasOver.width,canvasOver.height);
+    drawSelecting(e.clientX-canvasOffsetX-xStart,e.clientY-canvasOffsetY-yStart);
   }
   const cRect = canvas.getBoundingClientRect();
   const canvasX = Math.round(e.clientX - cRect.left);
@@ -178,6 +185,10 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 
 function drawSelectionBox(x,y) {
   ctxOver.strokeRect(x,y,tempImageData.width,tempImageData.height);
+}
+
+function drawSelecting(w,h){
+  ctxOver.strokeRect(xStart,yStart,w,h)
 }
 
 function truncateColor(value) {
@@ -329,7 +340,6 @@ function drawHistogram() {
   let maxGreen = Math.max(...greens);
   let maxBlue = Math.max(...blues);
   let maxMax = Math.max(maxGreen,maxRed,maxBlue);
-  console.log(maxMax);
   for(let i=0;i<255;i++) {
     histogramCtx.strokeStyle = "#FF0000"
     histogramCtx.fillStyle = "#FF0000"
