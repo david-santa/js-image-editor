@@ -10,6 +10,7 @@ const histogramCanvas = document.getElementById("histogramCanvas")
 const histogramCtx = histogramCanvas.getContext('2d');
 const btnShowHistogram = document.getElementById("btnShowHistogram")
 const btnGrayscale = document.getElementById("btnGrayscale");
+const btnInvert = document.getElementById("btnInvert");
 var originalRatio=16/9;
 var img = new Image();
 var xStart = 0;
@@ -26,6 +27,10 @@ btnShowHistogram.addEventListener("click",()=>{
 btnGrayscale.addEventListener("click",()=>{
   var imageData = ctx.getImageData(xStart,yStart,xEnd-xStart,yEnd-yStart);
   grayscale(imageData);
+})
+btnInvert.addEventListener("click",()=>{
+  var imageData = ctx.getImageData(xStart,yStart,xEnd-xStart,yEnd-yStart);
+  invert(imageData);
 })
 
 
@@ -179,6 +184,20 @@ function grayscale(imageData) {
       yStart < yEnd ? yStart : yEnd
   );
 }
+
+function invert(imageData){
+  var data = imageData.data;
+  for (var i = 0; i < data.length; i += 4) {
+    data[i]     = 255 - data[i];     // red
+    data[i + 1] = 255 - data[i + 1]; // green
+    data[i + 2] = 255 - data[i + 2]; // blue
+  }
+  imageData.data = data;
+  ctx.putImageData(imageData,
+      xStart < xEnd ? xStart : xEnd,
+      yStart < yEnd ? yStart : yEnd
+  );
+};
 
 //#endregion
 
