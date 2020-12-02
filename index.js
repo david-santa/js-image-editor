@@ -13,11 +13,10 @@ const btnGrayscale = document.getElementById("btnGrayscale");
 const btnInvert = document.getElementById("btnInvert");
 const sliderBrightness = document.getElementById("brightnessSlider");
 const sliderContrast = document.getElementById("contrastSlider");
-var selecting = false;
-var movingSelection = false;
-var timer;
-var shiftDown = false;
-var tempImageData;
+let selecting = false;
+let movingSelection = false;
+let shiftDown = false;
+let tempImageData;
 let originalImage;
 let originalRatio = 16 / 9;
 let img = new Image();
@@ -67,8 +66,7 @@ canvasOver.addEventListener("mouseup", (e) => {
   let xEndMove = Math.round(e.clientX - canvasOffsetX);
   let yEndMove = Math.round(e.clientY - canvasOffsetY);
   if(shiftDown){
-    let imageToCopy=tempImageData;
-    ctx.putImageData(imageToCopy,xEndMove,yEndMove);
+    ctx.putImageData(tempImageData,xEndMove,yEndMove);
     deleteSelection(tempImageData)
     movingSelection = false;
   }
