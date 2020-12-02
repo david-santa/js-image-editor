@@ -49,8 +49,8 @@ btnInvert.addEventListener("click",()=>{
 canvasOver.addEventListener("mousedown", (e) => {
   xStart = Math.round(e.clientX - canvasOffsetX);
   yStart = Math.round(e.clientY - canvasOffsetY);
-  console.log(xStart, yStart);
   ctxOver.clearRect(0,0,canvas.width,canvas.height)
+  drawHistogram()
 });
 
 canvasOver.addEventListener("mouseup", (e) => {
@@ -58,6 +58,7 @@ canvasOver.addEventListener("mouseup", (e) => {
   yEnd = Math.round(e.clientY - canvasOffsetY);
   ctxOver.fillstyle = "#000000"
   ctxOver.strokeRect(xStart, yStart, xEnd - xStart, yEnd - yStart);
+  drawHistogram()
 });
 
 
@@ -106,7 +107,6 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
         originalImage = img;
       };
       img.src = URL.createObjectURL(inputElement.files[0]);
-      console.log(img.src)
       updateThumbnail(dropZoneElement, inputElement.files[0]);
       changeMode();
     }
@@ -277,31 +277,34 @@ function array256(default_value) {
   return arr;
 }
 function drawHistogram() {
+  histogramCtx.clearRect(0,0,histogramCanvas.width,histogramCanvas.height);
   const reds = array256(0);
   const greens = array256(0);
   const blues = array256(0);
 
-  let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-  console.log(imageData);
+  let imageData = ctx.getImageData(xStart, yStart, xEnd-xStart, yEnd-yStart);
 
   for (let i = 0; i < imageData.width * imageData.height; i += 4) {
     reds[imageData.data[i]]++;
     greens[imageData.data[i + 1]]++;
     blues[imageData.data[i + 2]]++;
   }
+  let maxRed = Math.max(...reds);
+  let maxGreen = Math.max(...greens);
+  let maxBlue = Math.max(...blues);
+  let maxMax = Math.max(maxGreen,maxRed,maxBlue);
+  console.log(maxMax);
   for(let i=0;i<255;i++) {
     histogramCtx.strokeStyle = "#FF0000"
     histogramCtx.fillStyle = "#FF0000"
-    histogramCtx.fillRect(i, 30, 1, reds[i] / 25);
+    histogramCtx.fillRect(i, 30, 1, reds[i] / maxMax * 80);
     histogramCtx.strokeStyle = "#00FF00"
     histogramCtx.fillStyle = "#00FF00"
-    histogramCtx.fillRect(i, 30, 1, greens[i] / 25);
+    histogramCtx.fillRect(i, 30, 1, greens[i] / maxMax * 80);
     histogramCtx.strokeStyle = "#0000FF"
     histogramCtx.fillStyle = "#0000FF"
-    histogramCtx.fillRect(i, 30, 1, blues[i] / 25);
+    histogramCtx.fillRect(i, 30, 1, blues[i] / maxMax * 80);
   }
-  console.log(reds);
 }
 
 //#endregion
