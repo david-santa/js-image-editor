@@ -69,6 +69,9 @@ function logKeyDown(e) {
     // canvas.height=300/originalRatio;
     // ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }
+  if(e.code === `Delete`){
+    deleteSelection(ctx.getImageData(xStart,xEnd,xEnd-xStart,yEnd-yStart));
+  }
 }
 
 canvas.addEventListener("mousemove", function (e) {
@@ -202,6 +205,19 @@ function grayscale(imageData) {
     data[i] = avg; // red
     data[i + 1] = avg; // green
     data[i + 2] = avg; // blue
+  }
+  imageData.data = data;
+  ctx.putImageData(
+      imageData,
+      xStart < xEnd ? xStart : xEnd,
+      yStart < yEnd ? yStart : yEnd
+  );
+}
+
+function deleteSelection(imageData) {
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i++) {
+    data[i]=255;
   }
   imageData.data = data;
   ctx.putImageData(
