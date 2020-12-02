@@ -25,13 +25,11 @@ var yEnd = 0;
 //#region EVENT LISTENERS
 
 sliderBrightness.onchange = function() {
-  console.log('hau');
   applyBrightness(this.value);
 }
 
 sliderContrast.onchange = function() {
-  var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
-  applyContrast(this.value);
+  applyContrast(parseInt(contrastSlider.value, 10));
 }
 
 btnShowHistogram.addEventListener("click",()=>{
@@ -235,6 +233,20 @@ function applyBrightness(brightness) {
     data[i] += 255 * (brightness / 100);
     data[i+1] += 255 * (brightness / 100);
     data[i+2] += 255 * (brightness / 100);
+  }
+  imageData.data = data;
+  ctx.putImageData(imageData,0,0)
+}
+function applyContrast(contrast) {
+  redrawImage();
+  var imageData = ctx.getImageData(0,0,canvas.width,canvas.height)
+  var data = imageData.data;
+  var factor = (259.0 * (contrast + 255.0)) / (255.0 * (259.0 - contrast));
+
+  for (var i = 0; i < data.length; i += 4) {
+    data[i] = truncateColor(factor * (data[i] - 128.0) + 128.0);
+    data[i + 1] = truncateColor(factor * (data[i + 1] - 128.0) + 128.0);
+    data[i + 2] = truncateColor(factor * (data[i + 2] - 128.0) + 128.0);
   }
   imageData.data = data;
   ctx.putImageData(imageData,0,0)
