@@ -13,6 +13,10 @@ const btnGrayscale = document.getElementById("btnGrayscale");
 const btnInvert = document.getElementById("btnInvert");
 const sliderBrightness = document.getElementById("brightnessSlider");
 const sliderContrast = document.getElementById("contrastSlider");
+var movingSelection = false;
+var timer;
+var shiftDown = false;
+var tempImageData;
 let originalImage;
 let originalRatio = 16 / 9;
 let img = new Image();
@@ -44,25 +48,40 @@ btnInvert.addEventListener("click",()=>{
   invert(imageData);
 })
 
-
-
 canvasOver.addEventListener("mousedown", (e) => {
-  xStart = Math.round(e.clientX - canvasOffsetX);
-  yStart = Math.round(e.clientY - canvasOffsetY);
-  ctxOver.clearRect(0,0,canvas.width,canvas.height)
-  drawHistogram()
+  if(shiftDown){
+    tempImageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
+    movingSelection = true;
+  }
+  else {
+    xStart = Math.round(e.clientX - canvasOffsetX);
+    yStart = Math.round(e.clientY - canvasOffsetY);
+    ctxOver.clearRect(0, 0, canvas.width, canvas.height)
+    drawHistogram()
+  }
 });
 
 canvasOver.addEventListener("mouseup", (e) => {
-  xEnd = Math.round(e.clientX - canvasOffsetX);
-  yEnd = Math.round(e.clientY - canvasOffsetY);
+  let xEndMove = Math.round(e.clientX - canvasOffsetX);
+  let yEndMove = Math.round(e.clientY - canvasOffsetY);
+  if(shiftDown){
+    let imageToCopy=tempImageData;
+    ctx.putImageData(imageToCopy,xEndMove,yEndMove);
+    deleteSelection(tempImageData)
+    movingSelection = false;
+  }
+  else{
+    xEnd = Math.round(e.clientX - canvasOffsetX);
+    yEnd = Math.round(e.clientY - canvasOffsetY);
   ctxOver.fillstyle = "#000000"
   ctxOver.strokeRect(xStart, yStart, xEnd - xStart, yEnd - yStart);
   drawHistogram()
+  }
 });
 
 
 document.addEventListener("keydown", logKeyDown);
+document.addEventListener("keyup",logKeyUp);
 
 function logKeyDown(e) {
   if(e.code === `KeyA`){
@@ -73,9 +92,22 @@ function logKeyDown(e) {
   if(e.code === `Delete`){
     deleteSelection(ctx.getImageData(xStart,xEnd,xEnd-xStart,yEnd-yStart));
   }
+  if(e.code === `ShiftLeft`){
+    shiftDown = true;
+  }
 }
 
-canvas.addEventListener("mousemove", function (e) {
+function logKeyUp(e){
+  if(e.code=== `ShiftLeft`){
+    shiftDown = false;
+  }
+}
+
+canvasOver.addEventListener("mousemove", function (e) {
+  if(movingSelection){
+    ctxOver.clearRect(0,0,canvasOver.width,canvasOver.height);
+    drawSelectionBox(e.clientX-canvasOffsetX,e.clientY-canvasOffsetY);
+  }
   const cRect = canvas.getBoundingClientRect();
   const canvasX = Math.round(e.clientX - cRect.left);
   const canvasY = Math.round(e.clientY - cRect.top);
@@ -143,6 +175,10 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 //#endregion
 
 //#region UTILITARIES
+
+function drawSelectionBox(x,y) {
+  ctxOver.strokeRect(x,y,tempImageData.width,tempImageData.height);
+}
 
 function truncateColor(value) {
   if (value < 0) {
