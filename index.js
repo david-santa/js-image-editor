@@ -11,6 +11,9 @@ const histogramCtx = histogramCanvas.getContext('2d');
 const btnShowHistogram = document.getElementById("btnShowHistogram")
 const btnGrayscale = document.getElementById("btnGrayscale");
 const btnInvert = document.getElementById("btnInvert");
+const sliderBrightness = document.getElementById("brightnessSlider");
+const sliderContrast = document.getElementById("contrastSlider");
+var originalImage;
 var originalRatio=16/9;
 var img = new Image();
 var xStart = 0;
@@ -20,6 +23,16 @@ var yEnd = 0;
 //#endregion
 
 //#region EVENT LISTENERS
+
+sliderBrightness.onchange = function() {
+  console.log('hau');
+  applyBrightness(this.value);
+}
+
+sliderContrast.onchange = function() {
+  var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+  applyContrast(this.value);
+}
 
 btnShowHistogram.addEventListener("click",()=>{
   drawHistogram();
@@ -88,13 +101,13 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
         canvasOver.width = 800;
         canvasOver.height = 600;
         originalRatio = img.width/img.height;
-        ctx.drawImage(img, 0, 0, 800, 600);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        originalImage = img;
       };
       img.src = URL.createObjectURL(inputElement.files[0]);
       console.log(img.src)
       updateThumbnail(dropZoneElement, inputElement.files[0]);
       changeMode();
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
   });
 
@@ -117,6 +130,7 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
       img = new Image();
       img.onload = function () {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        originalImage = img;
       };
       img.src = URL.createObjectURL(e.dataTransfer.files[0]);
     }
@@ -128,6 +142,16 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 //#endregion
 
 //#region UTILITARIES
+
+function truncateColor(value) {
+  if (value < 0) {
+    value = 0;
+  } else if (value > 255) {
+    value = 255;
+  }
+
+  return value;
+}
 
 function updateThumbnail(dropZoneElement, file) {
   let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
@@ -164,6 +188,10 @@ function changeMode() {
   canvasContainer.width = 800;
 }
 
+function redrawImage() {
+  ctx.drawImage(originalImage,0,0,canvas.width,canvas.height);
+}
+
 
 //#endregion
 
@@ -197,7 +225,20 @@ function invert(imageData){
       xStart < xEnd ? xStart : xEnd,
       yStart < yEnd ? yStart : yEnd
   );
-};
+}
+
+function applyBrightness(brightness) {
+  redrawImage();
+  var imageData = ctx.getImageData(0,0,canvas.width,canvas.height)
+  var data = imageData.data;
+  for (var i = 0; i < data.length; i+= 4) {
+    data[i] += 255 * (brightness / 100);
+    data[i+1] += 255 * (brightness / 100);
+    data[i+2] += 255 * (brightness / 100);
+  }
+  imageData.data = data;
+  ctx.putImageData(imageData,0,0)
+}
 
 //#endregion
 
