@@ -17,6 +17,8 @@ selecție din Microsoft Paint)
 
 1p - afișare continuu (și în timpul modificării selecției) histogramă de culoare pentru selecția curentă
 
+1.5p - mutare selecție (folosind mouse-ul și tasta Shift)
+
 ###IN PROGRESS
 
 1p - crop interactiv (utilizatorul trebuie să poată selecta zona din imagine cu ajutorul mouseului)
@@ -25,7 +27,6 @@ selecție din Microsoft Paint)
 
 1p - adăugare text (utilizatorul furnizează textul, dimensiunea, culoarea, poziția)
 
-1.5p - mutare selecție (folosind mouse-ul și tasta Shift)
 
 
 
