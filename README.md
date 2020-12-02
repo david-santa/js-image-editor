@@ -4,7 +4,7 @@ Descriere: Permite utilizatorului să încarce și să editeze fotografii (imagi
 
 ## Cerinte
 
-###DONE
+### DONE
 
 1p - încărcare imagine prin drag and drop sau control input de tip file și salvare rezultat final 
 
@@ -19,7 +19,7 @@ selecție din Microsoft Paint)
 
 1.5p - mutare selecție (folosind mouse-ul și tasta Shift)
 
-###IN PROGRESS
+### IN PROGRESS
 
 1p - crop interactiv (utilizatorul trebuie să poată selecta zona din imagine cu ajutorul mouseului)
 
