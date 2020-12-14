@@ -20,6 +20,10 @@ const yInput = document.getElementById("yInput");
 const sizeInput = document.getElementById("sizeInput");
 const colorInput = document.getElementById("colorInput");
 const btnCrop = document.getElementById("cropBtn");
+const newWinput = document.getElementById("newWinput");
+const newHinput = document.getElementById("newHinput");
+const newWbtn = document.getElementById("newWbtn");
+const newHbtn = document.getElementById("newHbtn");
 let selecting = false;
 let movingSelection = false;
 let shiftDown = false;
@@ -34,6 +38,20 @@ let yEnd = 0;
 //#endregion
 
 //#region EVENT LISTENERS
+
+newWbtn.onclick = function (){
+  canvas.width = newWinput.value;
+  let h = newWinput.value*(600/800);
+  canvas.height=h;
+  ctx.drawImage(originalImage,0,0,newWinput.value,h);
+}
+
+newHbtn.onclick = function (){
+  canvas.height = newHinput.value;
+  let w = newHinput.value*(800/600);
+  canvas.width=w;
+  ctx.drawImage(originalImage,0,0,w,newHinput.value);
+}
 
 btnCrop.onclick = function (){
   if(xEnd-xStart) {

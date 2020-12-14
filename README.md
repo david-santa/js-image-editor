@@ -21,11 +21,13 @@ selecție din Microsoft Paint)
 
 1p - adăugare text (utilizatorul furnizează textul, dimensiunea, culoarea, poziția)
 
-### IN PROGRESS
-
 1p - crop interactiv (utilizatorul trebuie să poată selecta zona din imagine cu ajutorul mouseului)
 
 1p - scalare imagine cu păstrarea proporțiilor (utilizatorul va furniza noua lățime sau noua lungime)
+
+### IN PROGRESS
+
+0p - De stilizat aplicatia
 
 
 
