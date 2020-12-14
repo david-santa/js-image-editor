@@ -13,6 +13,12 @@ const btnGrayscale = document.getElementById("btnGrayscale");
 const btnInvert = document.getElementById("btnInvert");
 const sliderBrightness = document.getElementById("brightnessSlider");
 const sliderContrast = document.getElementById("contrastSlider");
+const btnAddText = document.getElementById("btnAddText");
+const textInput = document.getElementById("textInput");
+const xInput = document.getElementById("xInput");
+const yInput = document.getElementById("yInput");
+const sizeInput = document.getElementById("sizeInput");
+const colorInput = document.getElementById("colorInput");
 let selecting = false;
 let movingSelection = false;
 let shiftDown = false;
@@ -27,6 +33,10 @@ let yEnd = 0;
 //#endregion
 
 //#region EVENT LISTENERS
+
+btnAddText.onclick = function(){
+  drawText();
+}
 
 sliderBrightness.onchange = function() {
   applyBrightness(this.value);
@@ -202,6 +212,13 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 //#endregion
 
 //#region UTILITARIES
+
+function drawText() {
+  ctx.font = sizeInput.value + "px Arial";
+  ctx.fillStyle = colorInput.value;
+  console.log(sizeInput.value);
+  ctx.fillText(textInput.value, xInput.value, yInput.value);
+}
 
 function drawSelectionBox(x,y) {
   ctxOver.strokeRect(x,y,tempImageData.width,tempImageData.height);
