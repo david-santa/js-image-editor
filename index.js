@@ -40,12 +40,34 @@ btnShowHistogram.addEventListener("click",()=>{
   drawHistogram();
 })
 btnGrayscale.addEventListener("click",()=>{
-  const imageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
-  grayscale(imageData);
+  if(xEnd-xStart) {
+    const imageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
+    grayscale(imageData);
+  }
+  else{
+    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    xStart = 0;
+    yStart = 0;
+    xEnd = canvas.width;
+    yEnd = canvas.height;
+    grayscale(imageData);
+  }
+
 })
 btnInvert.addEventListener("click",()=>{
-  const imageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
-  invert(imageData);
+  if(xEnd-xStart) {
+    const imageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
+    invert(imageData);
+  }
+  else{
+    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    xStart = 0;
+    yStart = 0;
+    xEnd = canvas.width;
+    yEnd = canvas.height;
+    invert(imageData);
+  }
+
 })
 
 canvasOver.addEventListener("mousedown", (e) => {
@@ -326,9 +348,12 @@ function drawHistogram() {
   const reds = array256(0);
   const greens = array256(0);
   const blues = array256(0);
-
-  let imageData = ctx.getImageData(xStart, yStart, xEnd-xStart, yEnd-yStart);
-
+  let imageData;
+  if(xEnd-xStart!=0)
+   imageData = ctx.getImageData(xStart, yStart, xEnd-xStart, yEnd-yStart);
+  else {
+     imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  }
   for (let i = 0; i < imageData.width * imageData.height; i += 4) {
     reds[imageData.data[i]]++;
     greens[imageData.data[i + 1]]++;
