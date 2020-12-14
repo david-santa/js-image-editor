@@ -389,7 +389,7 @@ function drawHistogram() {
   const greens = array256(0);
   const blues = array256(0);
   let imageData;
-  if(xEnd-xStart!=0)
+  if(xEnd-xStart)
    imageData = ctx.getImageData(xStart, yStart, xEnd-xStart, yEnd-yStart);
   else {
      imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
