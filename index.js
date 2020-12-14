@@ -19,6 +19,7 @@ const xInput = document.getElementById("xInput");
 const yInput = document.getElementById("yInput");
 const sizeInput = document.getElementById("sizeInput");
 const colorInput = document.getElementById("colorInput");
+const btnCrop = document.getElementById("cropBtn");
 let selecting = false;
 let movingSelection = false;
 let shiftDown = false;
@@ -33,6 +34,28 @@ let yEnd = 0;
 //#endregion
 
 //#region EVENT LISTENERS
+
+btnCrop.onclick = function (){
+  if(xEnd-xStart) {
+    const imageData = ctx.getImageData(xStart, yStart, xEnd - xStart, yEnd - yStart);
+    canvas.width = xEnd-xStart;
+    canvas.height = yEnd - yStart;
+    ctx.putImageData(imageData,0,0);
+    canvasContainer.style.width = xEnd-xStart.toString()+"px";
+    canvasContainer.style.height = yEnd-yStart.toString()+"px";
+    canvasOver.width = xEnd-xStart;
+    canvasOver.height = yEnd - yStart;
+
+  }
+  else{
+    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    xStart = 0;
+    yStart = 0;
+    xEnd = canvas.width;
+    yEnd = canvas.height;
+    grayscale(imageData);
+  }
+}
 
 btnAddText.onclick = function(){
   drawText();

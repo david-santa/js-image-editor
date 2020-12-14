@@ -30,10 +30,10 @@ margin:15px;
   align-items: center;
   font-family: Lato, sans-serif;
   font-size: 2.5rem;
-  width:800px;
-  height:600px;
   text-transform: uppercase;
   color: white;
+    width: 800px;
+    height: 600px;
   background: #222;
   border-radius: var(--border-width);
 }
