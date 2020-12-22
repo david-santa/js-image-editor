@@ -17,23 +17,35 @@
   </head>
   <body>
   <div class="grid-container" id="grid-container">
+
+
   <div class="menu">
-    <button id="btnShowHistogram">Show Histogram</button>
-    <button id = "btnGrayscale">Grayscale</button>
-    <button id="btnInvert">Invert</button>
-    <br>
+    <p class="divider"> Adjustments </p>
     <label for="brightnessSlider">Brightness:</label>
     <input type="range" min="-100" max="100" value="0" class="slider" id="brightnessSlider">
+    <br
     <label for="contrastSlider">Contrast:</label>
     <input type="range" min="-100" max="100" value="0" class="slider" id="contrastSlider">
+
+    <p class="divider"> Transforms </p>
+    <input type="text" id="newWinput"> <button id="newWbtn">New Width</button>
     <br>
+    <label>OR</label>
+    <br>
+    <input type="text" id="newHinput"> <button id="newHbtn">New Height</button>
+
+    <p class="divider">Effects</p>
+    <button id = "btnGrayscale">Grayscale</button>
+    <button id="btnInvert">Invert</button>
+
+    <p class="divider">Text</p>
     <label for="textInput">Text:</label>
     <input type="text" id="textInput">
     <br>
     <label for="xInput">X:</label>
     <input type="text" id="xInput">
     <br>
-    <label for="xInput">Y:</label>
+    <label for="yInput">Y:</label>
     <input type="text" id="yInput">
     <br>
     <label for="sizeInput">Size:</label>
@@ -41,13 +53,17 @@
     <br>
     <label for="colorInput">Color:</label>
     <input type="color" id="colorInput">
-    <button id="btnAddText">Add Text</button>
     <br>
-    <input type="text" id="newWinput"> <button id="newWbtn">New Width</button>
-    <input type="text" id="newHinput"> <button id="newHbtn">New Height</button>
+    <button id="btnAddText">Add Text</button>
+
+    <p class="divider">Others</p>
+    <button id="btnShowHistogram">Show Histogram</button>
+
 
     <button id="cropBtn">CROP</button>
   </div>
+
+
   <div class="header"> <h1>Multimedia Project - Image Editor</h1></div>
   <div class="main">
     <form class="form-drop">
