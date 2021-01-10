@@ -6,16 +6,19 @@
 }
 
 .header{
+    border: 3px #f8e9a1 solid;
     grid-area: header;
-    background-color: #240090;
+    background-color: #374785;
     text-align: center;
-    color: #a0a0a0;
+    color: #f8e9a1;
 }
 
 .menu{
+    border: 3px #f8e9a1 solid;
     grid-area: menu;
-    background-color: #190061;
-    color: #a0a0a0
+    background-color: #374785;
+    padding: 10px;
+    color: #f8e9a1
 }
 
 .main{
@@ -73,16 +76,17 @@ margin:15px;
 }
 
 .form-drop{
-    max-width: 800px;
-    max-height: 600px;
+    max-width: 1920px;
+    max-height: 1080px;
 }
 
 .drop-zone {
     margin-top:50px;
     margin-left:150px;
-  max-width: 400px;
+  max-width: 800px;
+    width:800px;
   max-height: 600px;
-    height:400px;
+    height:450px;
   padding: 25px;
   display: flex;
   align-items: center;
@@ -92,8 +96,8 @@ margin:15px;
   font-weight: 500;
   font-size: 20px;
   cursor: pointer;
-  color: #a0a0a0;
-  border: 4px dashed #a0a0a0;
+  color: #24305e;
+  border: 4px dashed #24305e;
   border-radius: 10px;
   position:relative; z-index:2;
 }
@@ -136,27 +140,53 @@ margin:15px;
 }
 
 body {
-  background-color: #0c003d;
+  background-color: #a8d0e6;
 }
 
-/*.slider {*/
-/*    -webkit-appearance: none;  !* Override default CSS styles *!*/
-/*    appearance: none;*/
-/*    width: 100%; !* Full-width *!*/
-/*    height: 10px; !* Specified height *!*/
-/*    background: #d3d3d3; !* Grey background *!*/
-/*    outline: none; !* Remove outline *!*/
-/*    opacity: 1; !* Set transparency (for mouse-over effects on hover) *!*/
-/*    -webkit-transition: .2s; !* 0.2 seconds transition on hover *!*/
-/*    transition: opacity .2s;*/
-/*}*/
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,255,255,1) 100%);
+    outline: none;
+    opacity: 1;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
 
-/* Mouse-over effects */
+
+#contrastSlider{
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%);
+}
+
 .slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+    opacity: 1;
 }
 
 .divider{
     font-size: 1.2em;
 }
+
+.btn{
+
+    background: #00000000;
+    border:0.1em solid #FFFFFF;
+    border-radius:0.12em;
+    height: 1.5em;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    text-align:center;
+    transition: all 0.2s;
+}
+.btn:hover{
+    color:#000000;
+    background-color:#FFFFFF;
+}
+
+
 
