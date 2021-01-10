@@ -158,11 +158,6 @@ document.addEventListener("keydown", logKeyDown);
 document.addEventListener("keyup",logKeyUp);
 
 function logKeyDown(e) {
-  if(e.code === `KeyA`){
-    // canvas.width=300;
-    // canvas.height=300/originalRatio;
-    // ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  }
   if(e.code === `Delete`){
     deleteSelection(ctx.getImageData(xStart,xEnd,xEnd-xStart,yEnd-yStart));
   }
@@ -355,9 +350,9 @@ function deleteSelection(imageData) {
 function invert(imageData){
   const data = imageData.data;
   for (let i = 0; i < data.length; i += 4) {
-    data[i]     = 255 - data[i];     // red
-    data[i + 1] = 255 - data[i + 1]; // green
-    data[i + 2] = 255 - data[i + 2]; // blue
+    data[i]     = 255 - data[i];
+    data[i + 1] = 255 - data[i + 1];
+    data[i + 2] = 255 - data[i + 2];
   }
   imageData.data = data;
   ctx.putImageData(imageData,
